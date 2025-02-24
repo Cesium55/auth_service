@@ -18,4 +18,6 @@ Route::prefix('v1')->group(function () {
     Route::post("/login", [UserController::class, "login"]);
     Route::post("/auth", [UserController::class, "auth"]);
     Route::post("/refresh", [UserController::class, "refresh"]);
+
+    Route::get("/public-key", [UserController::class, "get_public_key"]);
 });

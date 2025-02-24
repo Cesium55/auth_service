@@ -57,19 +57,18 @@ class UserController extends Controller
 
 
     function auth(Request $request){
-        $validated = $request->validate([
-            "access_token" => "required|string|max:1000"
-        ]);
+        $token = $request->header("Authorization");
 
-        $u = JWTManager::verifyToken($validated["access_token"]);
+        if(!$token){
+            return response()->json(["message" => "Unauthorized"], 401);
+        }
+
+        $u = JWTManager::verifyToken($token);
         if(!$u){
             return response()->json(["message" => "Unauthorized"], 401);
         }
 
-        return response()->json([
-            "user" => $u,
-            "time" => time()
-        ]);
+        return $u;
 
     }
 
@@ -92,8 +91,15 @@ class UserController extends Controller
 
     }
 
+
+    function get_public_key(){
+        return config("jwt.public_key");
+    }
+
     function all()
     {
         return User::all();
     }
+
+
 }
