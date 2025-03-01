@@ -8,6 +8,9 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix("test")->group(function () {
         Route::get("/all", [UserController::class, "all"]);
+        Route::get("/check-auth", function () {
+            return "You are authorized!";
+        })->middleware(App\Http\Middleware\CheckAuth::class);
     });
 
     Route::get("/", function () {

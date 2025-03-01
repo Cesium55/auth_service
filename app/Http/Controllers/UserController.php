@@ -60,7 +60,7 @@ class UserController extends Controller
         $token = $request->header("Authorization");
 
         if(!$token){
-            return response()->json(["message" => "Unauthorized"], 401);
+            return response()->json(["message" => "No access token provided"], 401);
         }
 
         $u = JWTManager::verifyToken($token);
@@ -87,13 +87,17 @@ class UserController extends Controller
             return response()->json(["message" => "Server error"], status: 500);
         }
 
-        return JWTManager::generateToken($user);
+        return response()->json([
+            "access_token" => JWTManager::generateToken($user)
+        ]);
 
     }
 
 
     function get_public_key(){
-        return config("jwt.public_key");
+        return response()->json([
+            "key" => config("jwt.public_key")
+        ]);
     }
 
     function all()
