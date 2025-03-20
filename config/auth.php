@@ -114,5 +114,6 @@ return [
 
     'refresh_token_lifetime' => (int) env('REFRESH_TOKEN_LIFETIME', 60 * 60 * 24 * 90),
     'access_token_lifetime' => (int) env('ACCESS_TOKEN_LIFETIME', 900),
+    'api_token_lifetime' => (int) env('ACCESS_TOKEN_LIFETIME', 15778800),
 
 ];
