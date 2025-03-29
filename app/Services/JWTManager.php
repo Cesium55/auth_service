@@ -22,6 +22,7 @@ class JWTManager
         }
 
         $payload = [
+            "type" => "user",
             "id" => $user->id,
             "is_admin" => $user->is_admin,
             "confirmed" => $user->is_confirmed,
@@ -57,6 +58,7 @@ class JWTManager
         }
 
         $payload = [
+            "type" => "api_client",
             "id" => $client->name,
             "is_admin" => $client->is_admin,
             "exp" => time() + $expiresIn

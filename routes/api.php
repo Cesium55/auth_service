@@ -28,4 +28,7 @@ Route::prefix('v1')->group(function () {
 
     Route::post("/api/login", [ApiTokensController::class, "login"]);
     Route::post("/api/auth", [ApiTokensController::class, "auth"]);
+
+
+    Route::post("/auth", [ApiTokensController::class, "auth"]);
 });
