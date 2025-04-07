@@ -30,7 +30,7 @@ class ApiTokensController extends Controller
 
     public static function auth(Request $request)
     {
-        $token = $request->header("Authorization");
+        $token = $request->bearerToken();
 
         if(!$token){
             return response()->json(["message" => "No access token provided"], 401);

@@ -14,14 +14,25 @@ Route::prefix('v1')->group(function () {
         })->middleware(App\Http\Middleware\CheckAuth::class);
     });
 
-    Route::get("/", function () {
-        return "Auth api v1";
+
+    Route::get('/swagger/swagger.json', function () {
+        $path = public_path('swagger/swagger.json');
+
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        return Response::file($path, [
+            'Access-Control-Allow-Origin' => '*'
+        ]);
     });
 
-    Route::post("/user/register", [UserController::class, "register"]);
-    Route::post("/user/login", [UserController::class, "login"]);
-    Route::post("/user/auth", [UserController::class, "auth"]);
-    Route::post("/user/refresh", [UserController::class, "refresh"]);
+
+
+    Route::post("/users/register", [UserController::class, "register"]);
+    Route::post("/users/login", [UserController::class, "login"]);
+    Route::post("/users/auth", [UserController::class, "auth"]);
+    Route::post("/users/refresh", [UserController::class, "refresh"]);
 
     Route::get("/public-key", [UserController::class, "get_public_key"]);
 

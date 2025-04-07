@@ -9,6 +9,7 @@ use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\Job;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -57,7 +58,7 @@ class UserController extends Controller
 
 
     function auth(Request $request){
-        $token = $request->header("Authorization");
+        $token = $request->bearerToken();
 
         if(!$token){
             return response()->json(["message" => "No access token provided"], 401);
