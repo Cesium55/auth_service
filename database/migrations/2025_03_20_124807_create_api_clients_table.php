@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('api_clients', function (Blueprint $table) {
-            $table->string("name")->unique()->index();
-            $table->string("client_secret");
-            $table->boolean("is_admin")->default(false);
+            $table->string('name')->unique()->index();
+            $table->string('client_secret');
+            $table->boolean('is_admin')->default(false);
             $table->id();
             $table->timestamps();
         });

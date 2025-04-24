@@ -1,30 +1,22 @@
 <?php
 
-
-use App\Validators\RegisterUserValidator;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
-
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-
 use App\Models\User;
+use App\Validators\RegisterUserValidator;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Validation\ValidationException;
 
 uses(RefreshDatabase::class);
 
-it("testting test", function (){
+it('testting test', function () {
     $a = 1 + 3;
 
     expect($a)->toBe(4);
 });
 
-
-
 it('validates valid data successfully', function () {
     $data = [
         'email' => 'test@example.com',
-        'password' => 'strongpassword'
+        'password' => 'strongpassword',
     ];
 
     $validated = RegisterUserValidator::validate($data);
@@ -37,20 +29,20 @@ it('validates valid data successfully', function () {
 it('throws ValidationException when email is invalid', function () {
     $data = [
         'email' => 'invalid-email',
-        'password' => 'strongpassword'
+        'password' => 'strongpassword',
     ];
 
-    expect(fn() => RegisterUserValidator::validate($data))
+    expect(fn () => RegisterUserValidator::validate($data))
         ->toThrow(ValidationException::class);
 });
 
 it('throws ValidationException when password is too short', function () {
     $data = [
         'email' => 'test@example.com',
-        'password' => 'short'
+        'password' => 'short',
     ];
 
-    expect(fn() => RegisterUserValidator::validate($data))
+    expect(fn () => RegisterUserValidator::validate($data))
         ->toThrow(ValidationException::class);
 });
 
@@ -64,6 +56,6 @@ it('throws ValidationException when email is already taken', function () {
         'password' => 'strongpassword',
     ];
 
-    expect(fn() => RegisterUserValidator::validate($data))
+    expect(fn () => RegisterUserValidator::validate($data))
         ->toThrow(ValidationException::class);
 });

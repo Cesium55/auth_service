@@ -2,13 +2,14 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\ApiClient;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
 class CreateApiClientCommand extends Command
 {
     protected $signature = 'api-client:create {name} {secret} {--admin}';
+
     protected $description = 'Create new api client';
 
     public function handle()

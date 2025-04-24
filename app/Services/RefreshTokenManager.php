@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Models\RefreshToken;
-use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class RefreshTokenManager
 {
@@ -24,7 +24,7 @@ class RefreshTokenManager
     {
         $refreshToken = RefreshToken::where('token', $token)->first();
 
-        if (!$refreshToken) {
+        if (! $refreshToken) {
             return null;
         }
 
@@ -33,6 +33,7 @@ class RefreshTokenManager
 
         if (now()->greaterThan($expiresAt)) {
             $refreshToken->delete();
+
             return null;
         }
 

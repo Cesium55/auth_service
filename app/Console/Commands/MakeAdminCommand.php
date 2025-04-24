@@ -26,24 +26,25 @@ class MakeAdminCommand extends Command
      */
     public function handle()
     {
-        $email = $this->argument("email");
+        $email = $this->argument('email');
 
-        $user = User::where("email", $email)->first();
-        if(!$user){
+        $user = User::where('email', $email)->first();
+        if (! $user) {
             $this->error("User with email '$email' not found");
+
             return;
         }
 
-        if ($user->is_admin){
-            $this->warn("User is already admin");
+        if ($user->is_admin) {
+            $this->warn('User is already admin');
+
             return;
         }
 
         $user->is_admin = true;
         $user->save();
 
-        $this->info("DONE!");
-
+        $this->info('DONE!');
 
     }
 }
