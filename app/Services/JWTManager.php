@@ -10,6 +10,8 @@ use Firebase\JWT\Key;
 
 class JWTManager
 {
+    public const ALG = 'RS256';
+
     public static function generateToken(User $user)
     {
         $privateKey = config('jwt.private_key');
@@ -29,7 +31,7 @@ class JWTManager
             'exp' => time() + $expiresIn,
         ];
 
-        return JWT::encode($payload, $privateKey, 'RS256');
+        return JWT::encode($payload, $privateKey, self::ALG);
     }
 
     public static function verifyToken($token)
@@ -41,7 +43,7 @@ class JWTManager
                 throw new Exception('Public key not found!');
             }
 
-            return JWT::decode($token, new Key($publicKey, 'RS256'));
+            return JWT::decode($token, new Key($publicKey, self::ALG));
         } catch (Exception $e) {
             return null;
         }
@@ -65,6 +67,6 @@ class JWTManager
             'exp' => time() + $expiresIn,
         ];
 
-        return JWT::encode($payload, $privateKey, 'RS256');
+        return JWT::encode($payload, $privateKey, self::ALG);
     }
 }

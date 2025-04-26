@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ApiClient>
  */
-class UserFactory extends Factory
+class ApiClientFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'email' => $this->faker->unique()->safeEmail(),
-            'hashed_password' => Hash::make('12345678'),
+            'name' => $this->faker->name(),
+            'client_secret' => Hash::make('12345678'),
             'is_admin' => false,
         ];
     }

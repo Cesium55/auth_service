@@ -9,7 +9,6 @@ uses(RefreshDatabase::class);
 
 it('testting test', function () {
     $a = 1 + 3;
-    dd(app()->environment(), config('database.default'), config('database.connections.'.config('database.default')));
 
     expect($a)->toBe(4);
 });
