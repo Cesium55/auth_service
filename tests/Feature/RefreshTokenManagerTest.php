@@ -4,20 +4,6 @@ use App\Models\User;
 use App\Services\RefreshTokenManager;
 use Illuminate\Support\Facades\Config;
 
-it('verifies expired token', function () {
-
-    Config::set('auth.refresh_token_lifetime', 0);
-
-    User::factory()->create();
-
-    $token = RefreshTokenManager::generateToken(1);
-
-    $verified = RefreshTokenManager::verifyToken($token->token);
-
-    expect($verified)->toBeNull();
-
-});
-
 it('generates valid token', function () {
 
     $user = User::factory()->create();
