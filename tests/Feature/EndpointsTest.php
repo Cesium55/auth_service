@@ -70,3 +70,32 @@ it('test invalid auth', function () {
 
     expect($response2->status())->toBe(401);
 });
+
+it('test expired auth token', function () {
+
+    config(['auth.access_token_lifetime' => 0]);
+
+    $this->post('/api/v1/users/register', ['email' => 'test@email.dota', 'password' => '12345678']);
+    $response1 = $this->post('/api/v1/users/login', ['email' => 'test@email.dota', 'password' => '12345678']);
+
+    $response2 = $this->post('/api/v1/users/auth', [], ['Authorization' => 'Bearer '.$response1->getData()->access_token]);
+
+    expect($response2->status())->toBe(401);
+});
+
+it('test valid refresh token', function () {
+
+    $this->post('/api/v1/users/register', ['email' => 'test@email.dota', 'password' => '12345678']);
+    $response1 = $this->post('/api/v1/users/login', ['email' => 'test@email.dota', 'password' => '12345678']);
+
+    $refresh_token = $response1->getData()->refresh_token;
+    $response2 = $this->post('/api/v1/users/refresh', ['refresh_token' => $refresh_token]);
+
+    $access_token = $response2->getData()->access_token;
+    $response3 = $response2 = $this->post('/api/v1/users/auth', [], ['Authorization' => 'Bearer '.$access_token]);
+
+    expect($response2->status())->toBe(200);
+    expect($access_token)->toBeString();
+    expect($refresh_token)->toBeString();
+    expect($response3->status())->toBe(200);
+});

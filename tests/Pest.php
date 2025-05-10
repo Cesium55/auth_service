@@ -1,5 +1,10 @@
 <?php
 
+if (file_exists(__DIR__.'/../bootstrap/cache/config.php')) {
+    echo "\nКонфигурация закеширована. Выполни `php artisan config:clear` перед запуском тестов.\n\n";
+    exit(1);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
