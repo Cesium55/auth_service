@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiTokensController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WebAuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -16,7 +17,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/swagger/swagger.json', function () {
         $path = public_path('swagger/swagger.json');
 
-        if (! file_exists($path)) {
+        if (!file_exists($path)) {
             abort(404);
         }
 
@@ -24,6 +25,15 @@ Route::prefix('v1')->group(function () {
             'Access-Control-Allow-Origin' => '*',
         ]);
     });
+
+    Route::prefix('web')->group(function () {
+        Route::post('/register', [WebAuthController::class, 'register']);
+        Route::post('/login', [WebAuthController::class, 'login']);
+        Route::post('/auth', [WebAuthController::class, 'auth']);
+        Route::post('/refresh', [WebAuthController::class, 'refresh']);
+
+    });
+
 
     Route::post('/users/register', [UserController::class, 'register']);
     Route::post('/users/login', [UserController::class, 'login']);
