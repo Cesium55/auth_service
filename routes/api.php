@@ -31,6 +31,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/login', [WebAuthController::class, 'login']);
         Route::post('/auth', [WebAuthController::class, 'auth']);
         Route::post('/refresh', [WebAuthController::class, 'refresh']);
+        Route::post('/logout', [WebAuthController::class, 'logout']);
 
     });
 

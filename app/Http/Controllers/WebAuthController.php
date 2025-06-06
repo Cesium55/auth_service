@@ -62,17 +62,38 @@ class WebAuthController extends Controller
 
         $tokens = $userService->refresh_access_token($request->cookie('refresh_token') ?? '');
 
-        Cookie::queue(
-            'access_token',
+
+        return response()->json(["message" => "success"])->withCookie(cookie(
+            "access_token",
             $tokens["access_token"],
             $minutes = config("auth.refresh_token_lifetime") / 60,
             $path = '/',
             $domain = config('app.debug') ? null : 'localhost',
             $secure = config("app.debug"),
-            $httpOnly = false,
-            $sameSite = 'lax'
-        );
-        return response()->json(["message" => "success"]);
+            $httpOnly = false
+        ));
+    }
+
+
+    public function logout()
+    {
+        return response()->json(["message" => "success"])->withCookie(cookie(
+            "access_token",
+            null,
+            $minutes = -1,
+            $path = '/',
+            $domain = config('app.debug') ? null : 'localhost',
+            $secure = config("app.debug"),
+            $httpOnly = false
+        ))->withCookie(cookie(
+            "refresh_token",
+            null,
+            $minutes = -1,
+            $path = '/',
+            $domain = config('app.debug') ? null : 'localhost',
+            $secure = config("app.debug"),
+            $httpOnly = true
+        ));
     }
 
     public function get_public_key()

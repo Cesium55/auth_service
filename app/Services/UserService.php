@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Validators\LoginUserValidator;
 use App\Validators\RegisterUserValidator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Logger;
 
 class UserService
 {
@@ -58,10 +59,14 @@ class UserService
             abort(401, 'Unauthorized');
         }
 
-        $user = User::find($token->user_id)->first();
+
+        logger()->info("token user id " . $token->user_id);
+
+        $user = User::find($token->user_id);
         if (! $user) {
             abort(401, 'Unauthorized');
         }
+        logger()->info("user id " . $user->id);
 
         return [
             'access_token' => JWTManager::generateToken($user),
