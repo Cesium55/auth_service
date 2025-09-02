@@ -34,5 +34,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'tg' => [
+        'token' => env('TG_TOKEN', "fake_token"),
+        'auth_link_max_lifetime' => env('TG_AUTH_MAX_LIFETIME', 300),
+    ]
 
 ];

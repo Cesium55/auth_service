@@ -15,6 +15,7 @@ class User extends Model
         'is_admin',
         'is_confirmed',
         'token_version',
+        'tg_id'
     ];
 
     protected $hidden = [

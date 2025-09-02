@@ -23,6 +23,14 @@ class UserService
         return $user;
     }
 
+    public function get(int $id){
+        $user = User::where('id', $id)->first();
+        if (! $user ) {
+            abort(404, 'User not found');
+        }
+        return $user;
+    }
+
     public function login(string $email, string $password)
     {
         LoginUserValidator::validate(['email' => $email, 'password' => $password]);
@@ -56,7 +64,7 @@ class UserService
         $token = RefreshTokenManager::verifyToken($refresh_token);
 
         if (! $token) {
-            abort(401, 'Unauthorized');
+            abort(401, 'No refresh token provided');
         }
 
 
@@ -64,7 +72,7 @@ class UserService
 
         $user = User::find($token->user_id);
         if (! $user) {
-            abort(401, 'Unauthorized');
+            abort(401, 'Bad refresh token');
         }
         logger()->info("user id " . $user->id);
 

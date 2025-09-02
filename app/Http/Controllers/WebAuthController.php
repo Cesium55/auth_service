@@ -69,7 +69,7 @@ class WebAuthController extends Controller
             $minutes = config("auth.refresh_token_lifetime") / 60,
             $path = '/',
             $domain = config('app.debug') ? null : 'localhost',
-            $secure = config("app.debug"),
+            $secure = !config("app.debug"),
             $httpOnly = false
         ));
     }
@@ -83,7 +83,7 @@ class WebAuthController extends Controller
             $minutes = -1,
             $path = '/',
             $domain = config('app.debug') ? null : 'localhost',
-            $secure = config("app.debug"),
+            $secure = !config("app.debug"),
             $httpOnly = false
         ))->withCookie(cookie(
             "refresh_token",
@@ -91,7 +91,7 @@ class WebAuthController extends Controller
             $minutes = -1,
             $path = '/',
             $domain = config('app.debug') ? null : 'localhost',
-            $secure = config("app.debug"),
+            $secure = !config("app.debug"),
             $httpOnly = true
         ));
     }

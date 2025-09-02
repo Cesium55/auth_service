@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiTokensController;
+use App\Http\Controllers\TelegramAuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebAuthController;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +34,11 @@ Route::prefix('v1')->group(function () {
         Route::post('/refresh', [WebAuthController::class, 'refresh']);
         Route::post('/logout', [WebAuthController::class, 'logout']);
 
+        Route::post('/link-telegram', [TelegramAuthController::class, 'link_tg']);
+
     });
+
+    Route::get('/tg-get', [TelegramAuthController::class, 'getUserByTGID']);
 
 
     Route::post('/users/register', [UserController::class, 'register']);
@@ -47,4 +52,9 @@ Route::prefix('v1')->group(function () {
     Route::post('/api/auth', [ApiTokensController::class, 'auth']);
 
     Route::post('/auth', [ApiTokensController::class, 'auth']);
+
+
+
+
+
 });
